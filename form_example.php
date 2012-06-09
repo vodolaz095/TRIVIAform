@@ -1,16 +1,8 @@
-TRIVIAform
-==========
-
-PHP library for generating html4 forms  and validation of their submit
-
-
-Example code
-```php
 <html>
 <head>
     <title>Form Test</title>
     <style type="text/css">
-
+        
     </style>
 </head>
 <body>
@@ -51,4 +43,3 @@ echo $form2->render('Save','Cancel');
 </body>
 </html>
 
-```
