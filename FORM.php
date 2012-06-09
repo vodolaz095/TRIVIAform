@@ -79,6 +79,9 @@ public function addDropdown($name,$caption=null,$values=null,$selected=null)
 
 private function filter($text)
     {
+        /*
+         * add some filtering functions here!
+         */
         return $text;
     }
 
@@ -244,15 +247,8 @@ public function render($submit_text='Сохранить',$reset_text='Отмен
                         }
                     elseif($this->fields[$field]['type']=='label')
                         {
-                            ?>
-                            <?php if(isset($this->fields[$field]['error'])):?>
-                            <tr class="form_error" title="<?php echo $this->fields[$field]['error'];?>">
-                                <td colspan="2" align="center"><?php echo $this->fields[$field]['error'];?></td>
-                            </tr>
-    <tr class="form_error" title="<?php echo $this->fields[$field]['error'];?>">
-<?php else: ?>
-    <tr>
-<?php endif;?>
+?>
+<tr>
                             <td align="right"><?php echo $this->fields[$field]['caption'];?>:&nbsp;&nbsp;</td>
                             <td align="left"><?php echo $this->fields[$field]['value'];?></td>
 </tr>
