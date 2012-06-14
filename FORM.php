@@ -77,6 +77,16 @@ public function addDropdown($name,$caption=null,$values=null,$selected=null)
         return true;
     }
 
+
+public function addHidden($name,$value=1)
+    {
+        $this->fields[$name]=array(
+            'type'=>'hidden',
+            'value'=>$value,
+        );
+        return true;
+    }
+
 private function filter($text)
     {
         /*
@@ -140,6 +150,11 @@ public function submit()
                                             $this->fields[$field]['selected']=$_POST[$field];
                                             $this->clean[$field]=$this->filter($_POST[$field]);
                                         }
+                                }
+                            elseif($this->fields[$field]['type']=='hidden')
+                                {
+
+                                    if(isset($_POST[$field])) $this->clean[$field]=$this->filter($_POST[$field]);
                                 }
                             else
                                 {
@@ -254,7 +269,12 @@ public function render($submit_text='Сохранить',$reset_text='Отмен
 </tr>
 <?php
                         }
-
+                    elseif($this->fields[$field]['type']=='hidden')
+                        {
+?>
+                            <input name="<?php echo $field;?>" type="hidden" value="<?php echo $this->fields[$field]['value'];?>">
+<?php
+                        }
 
                 }
             ?>
