@@ -22,13 +22,15 @@ public function addLabel($name,$caption=null,$value=null)
         return true;
     }
 
-public function addText($name,$caption=null,$value=null,$regex='~^.*$~')
+public function addText($name,$caption=null,$value=null,$regex='~^.*$~',$error_message="Ошибка! Не правильный формат!")
     {
         $this->fields[$name]=array(
             'type'=>'text',
             'caption'=>isset($caption) ? $caption : $name,
             'value'=>$value,
-            'regex'=>$regex
+            'regex'=>$regex,
+            'error_message'=>$error_message
+
         );
         return true;
     }
@@ -128,6 +130,7 @@ public function submit()
                                     else
                                         {
                                             $this->fields[$field]['value']=$_POST[$field];
+                                            $this->setError($field,$this->fields[$field]['error_message']);
                                             //$this->fields[$field]['error']=true;
                                         }
                                 }
@@ -296,6 +299,7 @@ public function setError($name,$error_text)
         if(isset($this->fields[$name]))
             {
                 $this->fields[$name]['error']=$error_text;
+                return true;
             }
         else
             {
