@@ -44,13 +44,15 @@ public function addPassword($name,$caption=null,$value=null,$regex='~^.*$~')
         return true;
     }
 
-public function addTextArea($name,$caption=null,$value=null,$escape=true)
+public function addTextArea($name,$caption=null,$value=null,$escape=true,$rows=5,$cols=60)
     {
         $this->fields[$name]=array(
             'type'=>'textarea',
             'caption'=>isset($caption) ? $caption : $name,
             'value'=>$value,
-            'escape'=>$escape ? true : false
+            'escape'=>$escape ? true : false,
+            'rows'=>intval($rows),
+            'cols'=>intval($cols)
         );
         return true;
     }
@@ -89,7 +91,7 @@ public function addHidden($name,$value=1)
 
 private function filter($text)
     {
-        /*
+        /*todo
          * add some filtering functions here!
          */
         return $text;
@@ -212,7 +214,7 @@ public function render($submit_text='Сохранить',$reset_text='Отмен
 <?php endif;?>
                             <td colspan="2">
                                     <?php echo $this->fields[$field]['caption'];?></br>
-                                <textarea rows="5" cols="50" style="width: 100%;" name="<?php echo $field;?>"><?php echo $this->fields[$field]['value'];?></textarea>
+                                <textarea rows="<?php echo $this->fields[$field]['rows'];?>" cols="<?php echo $this->fields[$field]['cols'];?>" style="width: 100%;" name="<?php echo $field;?>"><?php echo $this->fields[$field]['value'];?></textarea>
                             </td>
     </tr>
 <?php
