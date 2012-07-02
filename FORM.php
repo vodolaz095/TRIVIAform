@@ -122,7 +122,7 @@ public function submit()
                         {
                             if($this->fields[$field]['type']=='text' or $this->fields[$field]['type']=='password')
                                 {
-                                    if(preg_match($this->fields[$field]['regex'],$_POST[$field]))
+                                    if(empty($_POST[$field]) or preg_match($this->fields[$field]['regex'],$_POST[$field]))
                                         {
                                             $this->fields[$field]['value']=$_POST[$field];
                                             $this->clean[$field]=$_POST[$field];
@@ -216,7 +216,7 @@ public function render($submit_text='Сохранить',$reset_text='Отмен
     <tr>
 <?php endif;?>
                             <td colspan="2">
-                                    <?php echo $this->fields[$field]['caption'];?></br>
+                                    <?php echo $this->fields[$field]['caption'];?><br>
                                 <textarea rows="<?php echo $this->fields[$field]['rows'];?>" cols="<?php echo $this->fields[$field]['cols'];?>" style="width: 100%;" name="<?php echo $field;?>"><?php echo $this->fields[$field]['value'];?></textarea>
                             </td>
     </tr>
