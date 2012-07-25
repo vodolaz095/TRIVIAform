@@ -35,13 +35,14 @@ public function addText($name,$caption=null,$value=null,$regex='~^.*$~',$error_m
         return true;
     }
 
-public function addPassword($name,$caption=null,$value=null,$regex='~^.*$~')
+public function addPassword($name,$caption=null,$value=null,$regex='~^.*$~',$error_message="Ошибка! Не правильный формат!")
     {
         $this->fields[$name]=array(
             'type'=>'password',
             'caption'=>isset($caption) ? $caption : $name,
             'value'=>$value,
-            'regex'=>$regex
+            'regex'=>$regex,
+            'error_message'=>$error_message
         );
         return true;
     }
@@ -122,10 +123,10 @@ public function submit()
                         {
                             if($this->fields[$field]['type']=='text' or $this->fields[$field]['type']=='password')
                                 {
-                                    if(empty($_POST[$field]) or preg_match($this->fields[$field]['regex'],$_POST[$field]))
+                                    if(empty($_POST[$field]) or preg_match($this->fields[$field]['regex'],htmlspecialchars($_POST[$field],ENT_QUOTES,'UTF-8')))
                                         {
                                             $this->fields[$field]['value']=$_POST[$field];
-                                            $this->clean[$field]=$_POST[$field];
+                                            $this->clean[$field]=htmlspecialchars($_POST[$field],ENT_QUOTES,'UTF-8');
                                         }
                                     else
                                         {
@@ -217,7 +218,7 @@ public function render($submit_text='Сохранить',$reset_text='Отмен
 <?php endif;?>
                             <td colspan="2">
                                     <?php echo $this->fields[$field]['caption'];?><br>
-                                <textarea rows="<?php echo $this->fields[$field]['rows'];?>" cols="<?php echo $this->fields[$field]['cols'];?>" style="width: 100%;" name="<?php echo $field;?>"><?php echo $this->fields[$field]['value'];?></textarea>
+                                <textarea class="-metrika-nokeys" rows="<?php echo $this->fields[$field]['rows'];?>" cols="<?php echo $this->fields[$field]['cols'];?>" style="width: 100%;" name="<?php echo $field;?>"><?php echo $this->fields[$field]['value'];?></textarea>
                             </td>
     </tr>
 <?php
