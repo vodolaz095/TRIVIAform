@@ -132,6 +132,7 @@ public function submit()
                                         {
                                             $this->fields[$field]['value']=$_POST[$field];
                                             $this->setError($field,$this->fields[$field]['error_message']);
+                                            unset($this->clean[$field]);
                                             //$this->fields[$field]['error']=true;
                                         }
                                 }
@@ -268,18 +269,14 @@ public function render($submit_text='Сохранить',$reset_text='Отмен
                         }
                     elseif($this->fields[$field]['type']=='label')
                         {
-?>
-<tr>
-                            <td align="right"><?php echo $this->fields[$field]['caption'];?>:&nbsp;&nbsp;</td>
-                            <td align="left"><?php echo $this->fields[$field]['value'];?></td>
-</tr>
-<?php
+?><tr>
+     <td align="right"><?php echo $this->fields[$field]['caption'];?>:&nbsp;&nbsp;</td>
+     <td align="left"><?php echo $this->fields[$field]['value'];?></td>
+</tr><?php
                         }
                     elseif($this->fields[$field]['type']=='hidden')
                         {
-?>
-                            <input name="<?php echo $field;?>" type="hidden" value="<?php echo $this->fields[$field]['value'];?>">
-<?php
+?><input name="<?php echo $field;?>" type="hidden" value="<?php echo $this->fields[$field]['value'];?>"><?php
                         }
 
                 }
